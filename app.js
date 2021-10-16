@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 
 // MODELS
 // ===========
-var { Location }=require("./models/location");
+const { Location }=require("./models/location");
 
 // Routes
 // ============
@@ -24,11 +24,11 @@ app.get('/',(req,res)=>{
 })
 
 app.post('/new',(req,res)=>{
-    var location=req.body.location
+    let location=req.body.location
     // console.log(location)
     getData(location).then((data)=>{
         console.log("After the promise")
-        var new_location={
+        let new_location={
             "location_name":location,
             "location_details":data
         }
@@ -60,7 +60,7 @@ app.get("/offline",(req,res)=>{
 
 app.post("/offline/",(req,res)=>{
     // var id=req.params.id;
-    var loc=req.body.location
+    let loc=req.body.location
     Location.findOne({ 'location_name': loc },(err,doc)=>{
         if(err || !doc){
             console.log(err)
@@ -77,10 +77,10 @@ const getData= async (location) => {
     
     let url=`http://api.weatherstack.com/current?access_key=${process.env.WEATHER_API_KEY}&query=${location}`;
     try {
-        var output=[]
+        let output=[]
         const response = await axios.get(url)
         console.log(response.data);
-        var data={
+        let data={
             "location":response.data.location,
             "current":response.data.current
         }
